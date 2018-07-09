@@ -586,6 +586,7 @@ public abstract class GraphPathToTripPlanConverter {
             leg.agencyBrandingUrl = agency.getBrandingUrl();
             leg.headsign = states[1].getBackDirection();
             leg.route = states[states.length - 1].getBackEdge().getName(requestedLocale);
+            leg.schoolRoute = route.getSchoolOnly();
             leg.routeColor = route.getColor();
             leg.routeId = route.getId();
             leg.routeLongName = route.getLongName();

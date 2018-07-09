@@ -50,11 +50,12 @@ public class GeocoderResource {
     @GET
     public Response textSearch (@QueryParam("query") String query,
                                 @QueryParam("autocomplete") @DefaultValue("false") boolean autocomplete,
-                                @QueryParam("stops") @DefaultValue("true") boolean stops,
+                                @QueryParam("stops") @DefaultValue("false") boolean stops,
                                 @QueryParam("clusters") @DefaultValue("false") boolean clusters,
-                                @QueryParam("corners") @DefaultValue("true") boolean corners
+                                @QueryParam("corners") @DefaultValue("false") boolean corners,
+                                @QueryParam("routes") @DefaultValue("true") boolean routes
                                 ) {
-        return Response.status(Response.Status.OK).entity(index.query(query, autocomplete, stops, clusters, corners)).build();
+        return Response.status(Response.Status.OK).entity(index.query(query, autocomplete, stops, clusters, corners, routes)).build();
     }
 
 }

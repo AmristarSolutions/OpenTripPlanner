@@ -103,6 +103,10 @@ public class Leg {
 
     @XmlAttribute
     @JsonSerialize
+    public int schoolRoute = 0;
+
+    @XmlAttribute
+    @JsonSerialize
     public String agencyName;
 
     @XmlAttribute
