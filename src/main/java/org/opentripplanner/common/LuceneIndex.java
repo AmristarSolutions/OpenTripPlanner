@@ -253,7 +253,8 @@ public class LuceneIndex {
                     lr.id = doc.getField("id").stringValue();
                 }
                 String name = doc.getField("name").stringValue();
-                lr.description = category + " " + name + " " + code;
+                lr.category = category;
+                lr.description = name + " " + code;
                 lr.description = lr.description.trim().replaceAll(" +", " ");
                 if (doc.getField("type") != null) {
                     lr.type = doc.getField("type").numericValue().intValue();
@@ -282,6 +283,7 @@ public class LuceneIndex {
         public int type;
         public int schoolOnly;
         public String agency;
+        public String category;
     }
 
     public static enum Category { STOP, CORNER, CLUSTER, ROUTE; }
