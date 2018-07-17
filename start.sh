@@ -6,7 +6,7 @@ else
 fi
 
 if [ "$2" == "build" ]; then
-        build="--build ~/otp/data/graphs/perth"
+        build="--build /home/amristar/otp/data/graphs/perth"
 else
         build=""
 fi

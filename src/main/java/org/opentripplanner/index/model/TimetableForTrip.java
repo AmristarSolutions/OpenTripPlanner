@@ -17,6 +17,7 @@ public class TimetableForTrip {
     public boolean currentTrip;
     public EncodedPolylineBean geometry;
     public int schoolOnly;
+    public int routeType;
     public long serviceDay;
     public List<TripTimeShort> triptimes; 
     public String routeLongName;
@@ -38,6 +39,7 @@ public class TimetableForTrip {
         routeLongName = r.getLongName();
         routeShortName = r.getShortName();
         schoolOnly = r.getSchoolOnly();
+        routeType = r.getType();
         serviceDay = sd != null ? sd.time(0) : 0;
         triptimes = TripTimeShort.fromTripTimes(table, tt.trip, serviceDay);
     }
