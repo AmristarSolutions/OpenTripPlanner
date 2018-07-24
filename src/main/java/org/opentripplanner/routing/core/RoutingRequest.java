@@ -1231,11 +1231,12 @@ public class RoutingRequest implements Cloneable, Serializable {
     public void canSplitEdge(StreetEdge edge) {
         if (splitEdge == null) {
             splitEdge = edge;
-        } else {
-            if (splitEdge.equals(edge)) {
-                throw new TrivialPathException();
-            }
         }
-
+        // comment out to allow trivial path for stop finder
+        // else {
+        //     if (splitEdge.equals(edge)) {
+        //         throw new TrivialPathException();
+        //     }
+        // }
     }
 }
