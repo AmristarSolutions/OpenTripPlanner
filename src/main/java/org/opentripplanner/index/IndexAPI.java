@@ -415,21 +415,31 @@ public class IndexAPI {
 
     /** Return timetable for a route. A route might contain different patterns */
    @GET
-   @Path("/routes/{routeId}/timetable")
+   @Path("/routes/{routeIds}/timetable")
    public Response getTimetableForRoute (
-       @PathParam("routeId") String routeIdString,
+       @PathParam("routeIds") String routeIds,
        @QueryParam("startTime") @DefaultValue("0") long startTime,
        @QueryParam("timeRange") @DefaultValue("86400") int timeRange,
        @QueryParam("numberOfDepartures") @DefaultValue("10") int numberOfDepartures
     ) {
-        AgencyAndId routeId = GtfsLibrary.convertIdFromString(routeIdString);
-        Route route = index.routeForId.get(routeId);
-        if (route == null) {
+        String[] routes = routeIds.split(",");
+        Map<String, Object> ret = new HashMap<String, Object>();
+        AgencyAndId routeId;
+        Route route;
+        for (int i = 0; i<routes.length; i++) {
+            routeId = GtfsLibrary.convertIdFromString(routes[i]);
+            route = index.routeForId.get(routeId);
+            if (route != null) {
+                ret.put(
+                    routes[i],
+                    index.getTimetableForRoute(route, startTime, timeRange, numberOfDepartures, true)
+                );
+            }
+        }
+        if (ret.isEmpty()) {
             return Response.status(Status.NOT_FOUND).entity(MSG_404).build();
         } else {
-            return Response.status(Status.OK).entity(
-                index.getTimetableForRoute(route, startTime, timeRange, numberOfDepartures, true)
-            ).build();
+            return Response.status(Status.OK).entity(ret).build();
         }
    }
 
