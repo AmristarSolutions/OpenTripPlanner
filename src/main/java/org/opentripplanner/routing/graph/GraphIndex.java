@@ -327,15 +327,24 @@ public class GraphIndex {
         astar.getShortestPathTree(rr, 1); // timeout in seconds
         // Destroy the routing context, to clean up the temporary edges & vertices
         rr.rctx.destroy();
+        Collection<TripPattern> patterns;
+        for (StopAndDistance sd : visitor.stopsFound) {
+            patterns = patternsForStop.get(sd.stop);
+            if (!patterns.isEmpty()) {
+                sd.route = ((TripPattern) patterns.toArray()[0]).route;
+            }
+        }
         return visitor.stopsFound;
     }
 
     public static class StopAndDistance {
         public Stop stop;
+        public Route route;
         public int distance;
 
-        public StopAndDistance(Stop stop, int distance){
+        public StopAndDistance(Stop stop, Route route, int distance){
             this.stop = stop;
+            this.route = route;
             this.distance = distance;
         }
     }
@@ -348,8 +357,11 @@ public class GraphIndex {
         @Override public void visitVertex(State state) {
             Vertex vertex = state.getVertex();
             if (vertex instanceof TransitStop) {
-                stopsFound.add(new StopAndDistance(((TransitStop) vertex).getStop(),
-                    (int) state.getElapsedTimeSeconds()));
+                stopsFound.add(new StopAndDistance(
+                    ((TransitStop) vertex).getStop(),
+                    null,
+                    (int) state.getElapsedTimeSeconds())
+                );
             }
         }
     }
