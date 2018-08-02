@@ -20,6 +20,7 @@ public class TimetableForTrip {
     public int routeType;
     public long serviceDay;
     public List<TripTimeShort> triptimes; 
+    public AgencyAndId routeId;
     public String routeLongName;
     public String routeShortName;
     public String tripShortName;
@@ -36,6 +37,7 @@ public class TimetableForTrip {
         tripDirectionId = tt.trip.getDirectionId();
         geometry = PolylineEncoder.createEncodings(table.pattern.geometry);
         Route r = tt.trip.getRoute();
+        routeId = r.getId();
         routeLongName = r.getLongName();
         routeShortName = r.getShortName();
         schoolOnly = r.getSchoolOnly();

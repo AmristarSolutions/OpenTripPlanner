@@ -38,6 +38,7 @@ import org.opentripplanner.index.model.StopShort;
 import org.opentripplanner.index.model.StopTimesInPattern;
 import org.opentripplanner.index.model.TripShort;
 import org.opentripplanner.index.model.TripTimeShort;
+import org.opentripplanner.index.model.TimetableForRoute;
 import org.opentripplanner.profile.StopCluster;
 import org.opentripplanner.routing.edgetype.SimpleTransfer;
 import org.opentripplanner.routing.edgetype.Timetable;
@@ -423,16 +424,18 @@ public class IndexAPI {
        @QueryParam("numberOfDepartures") @DefaultValue("10") int numberOfDepartures
     ) {
         String[] routes = routeIds.split(",");
-        Map<String, Object> ret = new HashMap<String, Object>();
+        List<TimetableForRoute> ret = new ArrayList<TimetableForRoute>();
         AgencyAndId routeId;
         Route route;
         for (int i = 0; i<routes.length; i++) {
             routeId = GtfsLibrary.convertIdFromString(routes[i]);
             route = index.routeForId.get(routeId);
             if (route != null) {
-                ret.put(
-                    routes[i],
-                    index.getTimetableForRoute(route, startTime, timeRange, numberOfDepartures, true)
+                ret.add(
+                    new TimetableForRoute(
+                        route,
+                        index.getTimetableForRoute(route, startTime, timeRange, numberOfDepartures, true)
+                    )
                 );
             }
         }

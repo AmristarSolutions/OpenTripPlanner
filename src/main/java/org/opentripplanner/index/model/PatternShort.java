@@ -12,14 +12,18 @@ public class PatternShort {
     public String id;
     public String desc;
     public String routeShortName;
+    public String routeLongName;
     public int routeType;
+    public int schoolOnly;
     
     public PatternShort (TripPattern pattern) {
         id = pattern.code;
         desc = pattern.name;
         routeShortName = pattern.route.getShortName();
+        routeLongName = pattern.route.getLongName();
         routeType = pattern.route.getType();
-    }
+        schoolOnly = pattern.route.getSchoolOnly();
+    }   
     
     public static List<PatternShort> list (Collection<TripPattern> in) {
         List<PatternShort> out = Lists.newArrayList();
